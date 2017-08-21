@@ -1,8 +1,10 @@
 package cn.rongcloud.im.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import cn.rongcloud.im.ui.activity.ReadReceiptDetailActivity;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -32,5 +34,10 @@ public class ConversationFragmentEx extends ConversationFragment {
         if (!typeStr.equals("chatroom")) {
             super.onWarningDialog(msg);
         }
+    }
+
+    @Override
+    public MessageListAdapter onResolveAdapter(Context context) {
+        return super.onResolveAdapter(context);
     }
 }

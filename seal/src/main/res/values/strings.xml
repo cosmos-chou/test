@@ -348,4 +348,5 @@
     <string name="seal_set_push_detail">显示 Push 内容</string>
     <string name="seal_set_push_receive">接收 Push 消息</string>
 
+    <string name="ex_plugn_title_take_photo">拍摄</string>
 </resources>
