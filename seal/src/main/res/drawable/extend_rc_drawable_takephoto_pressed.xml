@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle" >
+            <size android:height="57dp" android:width="57dp"/>
+            <solid android:color="#ffe6e6e6"/>
+            <stroke android:color="#ff737373" android:width="1px"/>
+            <corners android:radius="2dp"></corners>
+        </shape>
+    </item>
+    <item android:width="57dp" android:height="57dp">
+        <bitmap android:src="@drawable/ic_func_shot"/>
+    </item>
+</layer-list>

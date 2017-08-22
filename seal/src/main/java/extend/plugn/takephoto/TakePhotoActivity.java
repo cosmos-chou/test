@@ -41,6 +41,7 @@ public class TakePhotoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         SealAppContext.getInstance().pushActivity(this);
         init();
+        setTitle(R.string.ex_plugn_title_take_photo);
         //子类不再需要设置布局ID，也不再需要使用ButterKnife.bind()
         setContentView(provideContentViewId());
         initView();

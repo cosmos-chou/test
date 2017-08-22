@@ -80,7 +80,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onSuccess(int requestCode, Object result) {
-                if (result != null) {
+                if (result != null && false) {
                     VersionResponse response = (VersionResponse) result;
                     String[] s = response.getAndroid().getVersion().split("\\.");
                     StringBuilder sb = new StringBuilder();

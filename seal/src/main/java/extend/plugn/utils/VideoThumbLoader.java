@@ -3,8 +3,6 @@ package extend.plugn.utils;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
@@ -14,8 +12,6 @@ import android.widget.ImageView;
  * @描述 视频缩略图加载工具
  */
 public class VideoThumbLoader {
-    private ImageView imgView;
-    private String path;
 
     static VideoThumbLoader instance;
 
@@ -33,16 +29,6 @@ public class VideoThumbLoader {
     // 创建cache
     private LruCache<String, Bitmap> lruCache;
 
-    private Handler mHandler = new Handler() {
-
-        public void handleMessage(Message msg) {
-
-            if (imgView.getTag().equals(path)) {
-                Bitmap btp = (Bitmap) msg.obj;
-                imgView.setImageBitmap(btp);
-            }
-        }
-    };
 
     // @SuppressLint("NewApi")
     private VideoThumbLoader() {
@@ -71,27 +57,42 @@ public class VideoThumbLoader {
 
     }
 
-    public void showThumb(String path, ImageView imgview, int width, int height) {
+    public void showThumb(final String path, final ImageView imgview, int width, int height) {
 
-        if (getVideoThumbToCache(path) == null) {
+        RunnableWrapper runnable = null;
+        if(imgview != null){
             // 异步加载
             imgview.setTag(path);
-            new MyBobAsynctack(imgview, path, width, height).execute(path);
+            runnable = new RunnableWrapper() {
+                @Override
+                public void run() {
+                    if (imgview != null && imgview.getTag() != null && imgview.getTag().equals(path)) {
+                        imgview.setImageBitmap((Bitmap) paramsOut);
+                    }
+                }
+            };
+        }
+    }
+
+    public void showThumb(String path, Runnable runnable, int width, int height) {
+        if (getVideoThumbToCache(path) == null) {
+            new MyBobAsynctack(new RunnableWrapper(runnable), path, width, height).execute(path);
         } else {
-            imgview.setImageBitmap(getVideoThumbToCache(path));
+            runnable.run();
         }
 
     }
 
+
     class MyBobAsynctack extends AsyncTask<String, Void, Bitmap> {
-        private ImageView imgView;
+        private RunnableWrapper runnable;
         private String path;
         private int width;
         private int height;
 
-        public MyBobAsynctack(ImageView imageView, String path, int width,
+        public MyBobAsynctack(RunnableWrapper runnable, String path, int width,
                               int height) {
-            this.imgView = imageView;
+            this.runnable = runnable;
             this.path = path;
             this.width = width;
             this.height = height;
@@ -110,29 +111,32 @@ public class VideoThumbLoader {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            if (imgView.getTag() != null && imgView.getTag().equals(path)) {
-                imgView.setImageBitmap(bitmap);
+
+            if(runnable != null){
+                runnable.paramsOut = bitmap;
+                runnable.run();
             }
         }
     }
 
-    private void showDateByThread(ImageView imageview, final String path,
-                                  final int width, final int height) {
-        imgView = imageview;
-        this.path = path;
-        new Thread(new Runnable() {
+    public static class RunnableWrapper implements Runnable{
+        public Object paramsIn;
+        public Object paramsOut;
+        private Runnable mTarget;
+        RunnableWrapper(){
 
-            @Override
-            public void run() {
-                Bitmap bitmap = createVideoThumbnail(path, width, height,
-                        MediaStore.Video.Thumbnails.MICRO_KIND);
-                Message msg = new Message();
-                msg.obj = bitmap;
-                msg.what = 1001;
-                mHandler.sendMessage(msg);
+        }
+        RunnableWrapper(Runnable runnable){
+            mTarget = runnable;
+        }
+
+
+        @Override
+        public void run() {
+            if(mTarget != null){
+                mTarget.run();
             }
-        }).start();
-
+        }
     }
 
     private static Bitmap createVideoThumbnail(String vidioPath, int width,

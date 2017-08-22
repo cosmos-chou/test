@@ -328,8 +328,14 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.NoteInformationActivity" />
-        <activity android:name="extend.plugn.takephoto.TakePhotoActivity"/>
+        <activity android:name=".ui.activity.NoteInformationActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="extend.plugn.takephoto.TakePhotoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="extend.plugn.takephoto.PictureSelectorActivityEx"
+            android:screenOrientation="portrait"/>
+        <activity android:name="extend.common.VideoPlayerActivity"
+            android:screenOrientation="portrait"/>
         <receiver
             android:name=".SealNotificationReceiver"
             android:exported="true">

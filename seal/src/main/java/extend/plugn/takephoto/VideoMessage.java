@@ -1,24 +1,63 @@
 package extend.plugn.takephoto;
 
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Parcel;
+import android.util.Base64;
 
-import io.rong.common.ParcelUtils;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import io.rong.imlib.MessageTag;
-import io.rong.imlib.model.MessageContent;
 import io.rong.message.FileMessage;
 
 /**
  * Created by cosmos on 2017/8/21.
  */
-@MessageTag(value = "app:custom", flag =  MessageTag.ISPERSISTED)
+@MessageTag(value = "app:video", flag =  MessageTag.ISPERSISTED | MessageTag.ISCOUNTED)
 public class VideoMessage extends FileMessage {
+
+
     public VideoMessage(byte[] data) {
         super(data);
     }
+
+
+    private String convertToBase64(Bitmap b){
+        if(b != null) {
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.JPEG, 30, bos);
+            String result = Base64.encodeToString(bos.toByteArray(), Base64.NO_WRAP);
+            try {
+                bos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        return null;
+    }
+
+
+
+
+
+    public Bitmap getBitmap(){
+        return null;
+    }
+
     public VideoMessage(Parcel in) {
         super(in);
     }
 
+    public static VideoMessage obtain(Uri localUrl) {
+        FileMessage fm = FileMessage.obtain(localUrl);
+        if(fm != null){
+            return new VideoMessage(fm.encode());
+        }
+        return null;
+    }
 
     /**
      * 读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。

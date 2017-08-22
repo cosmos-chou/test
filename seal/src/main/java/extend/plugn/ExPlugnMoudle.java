@@ -3,10 +3,12 @@ package extend.plugn;
 import java.util.ArrayList;
 import java.util.List;
 
+import extend.plugn.takephoto.ImagePlugnEx;
 import extend.plugn.takephoto.TakePhotoPlugn;
 import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.plugin.ImagePlugin;
+import io.rong.imkit.widget.provider.FilePlugin;
 import io.rong.imlib.model.Conversation;
 
 /**
@@ -23,9 +25,9 @@ public class ExPlugnMoudle extends DefaultExtensionModule {
         for(int i = 0, size = moudles.size(); i < size; i ++){
             moudle = moudles.get(i);
             if(moudle instanceof ImagePlugin){
-                moudlesEx.add(moudle);
+                moudlesEx.add(new ImagePlugnEx());
                 moudlesEx.add(new TakePhotoPlugn());
-            }/*else if( !(moudle instanceof FilePlugin || moudle instanceof ))*/else{
+            }/*else if( !(moudle instanceof FilePlugin || moudle instanceof ))*/else if(!(moudle instanceof FilePlugin)){
                 moudlesEx.add(moudle);
             }
         }

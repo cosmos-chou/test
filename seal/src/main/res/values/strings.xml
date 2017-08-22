@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SealTalk</string>
+    <string name="app_name">喜讯</string>
     <string name="action_settings">Settings</string>
 
 
@@ -349,4 +349,5 @@
     <string name="seal_set_push_receive">接收 Push 消息</string>
 
     <string name="ex_plugn_title_take_photo">拍摄</string>
+    <string name="ex_rc_message_content_video">[视频]</string>
 </resources>
