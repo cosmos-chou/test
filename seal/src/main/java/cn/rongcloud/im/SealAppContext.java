@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Process;
 import android.util.Log;
 import android.view.View;
 
@@ -80,12 +81,13 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
     private RongIM.LocationProvider.LocationCallback mLastLocationCallback;
 
     private static ArrayList<Activity> mActivities;
-
+    private long mMainThreadId;
     public SealAppContext(Context mContext) {
         this.mContext = mContext;
         initListener();
         mActivities = new ArrayList<>();
         SealUserInfoManager.init(mContext);
+        mMainThreadId = Process.myTid();
     }
 
     /**
@@ -105,7 +107,9 @@ public class SealAppContext implements RongIM.ConversationListBehaviorListener,
         }
 
     }
-
+    public long getMainThreadId() {
+        return mMainThreadId;
+    }
     /**
      * 获取RongCloud 实例。
      *

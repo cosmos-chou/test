@@ -51,23 +51,5 @@ public class TakePhotoPlugn implements IPluginModule {
 
     @Override
     public void onActivityResult(int i, int i1, Intent intent) {
-        switch (i){
-            case PLUGN_REQUEST_CODE_TAKE_PHOTO:
-                switch (i1){
-                    case Activity.RESULT_OK:
-                        if(intent != null){
-                            String path = intent.getStringExtra("path");
-                            if (intent.getBooleanExtra("take_photo", true)) {
-                                //照片
-//                                mPresenter.sendImgMsg(ImageUtils.genThumbImgFile(path), new File(path));
-                            } else {
-                                //小视频
-//                                mPresenter.sendFileMsg(new File(path));
-                            }
-                        }
-                        break;
-                }
-                break;
-        }
     }
 }
