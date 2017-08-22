@@ -77,6 +77,7 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
         }
 
 
+
         //Create media controller
         mMediaController = new MediaController(this);
         mVideoView.setMediaController(mMediaController);
