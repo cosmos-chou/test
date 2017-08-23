@@ -2,10 +2,14 @@ package extend.plugn.utils;
 
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.util.LruCache;
 import android.widget.ImageView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @创建者 CSDN_LQR
@@ -28,7 +32,7 @@ public class VideoThumbLoader {
 
     // 创建cache
     private LruCache<String, Bitmap> lruCache;
-
+    private Map<String, Uri> thumnailCache = new HashMap<>();
 
     // @SuppressLint("NewApi")
     private VideoThumbLoader() {
@@ -51,7 +55,7 @@ public class VideoThumbLoader {
         }
     }
 
-    private Bitmap getVideoThumbToCache(String path) {
+    public Bitmap getVideoThumbToCache(String path) {
 
         return lruCache.get(path);
 
@@ -142,7 +146,12 @@ public class VideoThumbLoader {
     private static Bitmap createVideoThumbnail(String vidioPath, int width,
                                                int height, int kind) {
         Bitmap bitmap = ThumbnailUtils.createVideoThumbnail(vidioPath, kind);
-        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+        System.out.println("bitmap : " + bitmap.getHeight() + "   " + bitmap.getWidth());
+        if(bitmap.getWidth() != 0 && bitmap.getHeight() != 0){
+            width = height * bitmap.getWidth() / bitmap.getHeight();
+        }
+
+        bitmap = ThumbnailUtils.extractThumbnail(bitmap, width , height,
                 ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
         return bitmap;
     }

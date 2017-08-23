@@ -3,44 +3,60 @@ package extend.plugn.takephoto;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Parcel;
-import android.util.Base64;
+import android.text.TextUtils;
+import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
 import io.rong.message.FileMessage;
 
 /**
  * Created by cosmos on 2017/8/21.
  */
-@MessageTag(value = "app:video", flag =  MessageTag.ISPERSISTED | MessageTag.ISCOUNTED)
+@MessageTag(value = "app:video", flag =  MessageTag.ISPERSISTED | MessageTag.ISCOUNTED, messageHandler = VideoMessageHandler.class)
 public class VideoMessage extends FileMessage {
 
+    private Uri mThumnaiUri;
+    private String mContent;
 
     public VideoMessage(byte[] data) {
         super(data);
-    }
-
-
-    private String convertToBase64(Bitmap b){
-        if(b != null) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.JPEG, 30, bos);
-            String result = Base64.encodeToString(bos.toByteArray(), Base64.NO_WRAP);
-            try {
-                bos.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        String jsonStr = new String(data);
+        try {
+            JSONObject e = null;
+            e = new JSONObject(jsonStr);
+            if (e.has("content")) {
+                this.setBase64(e.optString("content"));
             }
-            return result;
+        }catch (JSONException e1) {
+            e1.printStackTrace();
         }
-
-        return null;
     }
 
+    public byte[] encode() {
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = new JSONObject(new String(super.encode(), "UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        try {
+            if(!TextUtils.isEmpty(this.mContent)) {
+                jsonObj.put("content", this.mContent);
+            } else {
+                Log.d("VideoMessage", "base64 is null");
+            }
 
-
+        } catch (JSONException var3) {
+            Log.e("JSONException", var3.getMessage());
+        }
+        this.mContent = null;
+        return jsonObj.toString().getBytes();
+    }
 
 
     public Bitmap getBitmap(){
@@ -49,6 +65,7 @@ public class VideoMessage extends FileMessage {
 
     public VideoMessage(Parcel in) {
         super(in);
+        mThumnaiUri = ParcelUtils.readFromParcel(in, Uri.class);
     }
 
     public static VideoMessage obtain(Uri localUrl) {
@@ -93,7 +110,24 @@ public class VideoMessage extends FileMessage {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest,flags);
+        ParcelUtils.writeToParcel(dest, mThumnaiUri);
 //        ParcelUtils.writeToParcel(dest, content);//该类为工具类，对消息中属性进行序列化
         //这里可继续增加你消息的属性
+    }
+
+    public String getBase64() {
+        return mContent;
+    }
+
+    public void setBase64(String s) {
+        mContent = s;
+    }
+
+    public void setThumUri(Uri parse) {
+        mThumnaiUri = parse;
+    }
+
+    public Uri getThumUri() {
+        return mThumnaiUri;
     }
 }

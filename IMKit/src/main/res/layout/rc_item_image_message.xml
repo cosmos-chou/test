@@ -11,7 +11,13 @@
         app:RCMinShortSideSize="120dp"
         app:RCMask="true"
         android:scaleType="centerCrop"/>
-
+    <ImageView
+        android:id="@+id/rc_img_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_play_circle_outline_black_24dp"
+        android:visibility="gone"
+        android:layout_gravity="center"/>
     <TextView
         android:id="@id/rc_msg"
         android:layout_width="fill_parent"

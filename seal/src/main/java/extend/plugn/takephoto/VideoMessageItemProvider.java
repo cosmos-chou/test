@@ -13,9 +13,9 @@ import cn.rongcloud.im.SealAppContext;
 import extend.common.VideoPlayerActivity;
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
-import io.rong.imkit.widget.provider.FileMessageItemProvider;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
-import io.rong.imlib.model.Message;
+import io.rong.imkit.widget.provider.ImageMessageItemProvider;
+import io.rong.message.ImageMessage;
 
 /**
  * Created by cosmos on 2017/8/21.
@@ -23,11 +23,12 @@ import io.rong.imlib.model.Message;
 @ProviderTag(messageContent = VideoMessage.class)
 public class VideoMessageItemProvider extends IContainerItemProvider.MessageProvider<VideoMessage>{
 
-    FileMessageItemProvider provider = new FileMessageItemProvider();
+    ImageMessageItemProvider provider = new ImageMessageItemProvider();
 
     @Override
     public void bindView(View view, int i, VideoMessage videoMessage, UIMessage uiMessage) {
-        provider.bindView(view, i, videoMessage, uiMessage);
+        provider.bindView(view, i, ImageMessage.obtain(videoMessage.getThumUri(), videoMessage.getLocalPath()), uiMessage);
+        view.findViewById(R.id.rc_img_play).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -40,9 +41,9 @@ public class VideoMessageItemProvider extends IContainerItemProvider.MessageProv
 //        provider.onItemClick(view, i, videoMessage, uiMessage);
         Intent intent = new Intent(view.getContext(), VideoPlayerActivity.class);
         Uri uri = videoMessage.getLocalPath();
-        intent.putExtra(VideoPlayerActivity.EXTRA_URI, uri);
+        intent.putExtra(VideoPlayerActivity.EXTRA_PROGRESS, uiMessage.getProgress());
         intent.putExtra(VideoPlayerActivity.EXTRA_VIDEO_MESSAGE, videoMessage);
-        intent.putExtra(VideoPlayerActivity.EXTRA_MESSAGE, Message.obtain(uiMessage.getTargetId(), uiMessage.getConversationType(), videoMessage));
+        intent.putExtra(VideoPlayerActivity.EXTRA_MESSAGE, uiMessage.getMessage());
         view.getContext().startActivity(intent);
     }
 

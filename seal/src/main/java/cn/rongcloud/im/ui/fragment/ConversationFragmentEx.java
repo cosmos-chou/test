@@ -2,24 +2,30 @@ package cn.rongcloud.im.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import cn.rongcloud.im.R;
+import cn.rongcloud.im.SealAppContext;
 import cn.rongcloud.im.ui.activity.ReadReceiptDetailActivity;
 import extend.plugn.takephoto.VideoMessage;
-import extend.plugn.utils.ImageUtils;
+import extend.plugn.takephoto.VideoMessageHandler;
 import extend.plugn.utils.VideoThumbLoader;
+import io.rong.common.FileUtils;
+import io.rong.imkit.RongContext;
 import io.rong.imkit.fragment.ConversationFragment;
+import io.rong.imkit.manager.SendImageManager;
 import io.rong.imkit.model.UIMessage;
-import io.rong.imkit.widget.AutoRefreshListView;
 import io.rong.imkit.widget.adapter.MessageListAdapter;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
-import io.rong.message.ImageMessage;
 
 /**
  *  会话 Fragment 继承自ConversationFragment
@@ -67,8 +73,9 @@ public class ConversationFragmentEx extends ConversationFragment {
         if (data != null) {
             String path = data.getStringExtra("path");
             if (data.getBooleanExtra("take_photo", true)) {
-                //照片
-                sendImgMsg(ImageUtils.genThumbImgFile(path), new File(path));
+                List<Uri> images = new ArrayList<>();
+                images.add(Uri.fromFile(new File(path)));
+                SendImageManager.getInstance().sendImages(getConversationType(), getTargetId(), images, true);
             } else {
                 //小视频
                 sendVideoMsg(new File(path));
@@ -76,19 +83,44 @@ public class ConversationFragmentEx extends ConversationFragment {
         }
     }
 
-
-    public void sendImgMsg(File imageFileThumb, File imageFileSource) {
-        Uri imageFileThumbUri = Uri.fromFile(imageFileThumb);
-        Uri imageFileSourceUri = Uri.fromFile(imageFileSource);
-        sendImgMsg(imageFileThumbUri, imageFileSourceUri);
-    }
-
     public void sendVideoMsg(final File file) {
 
         VideoThumbLoader.getInstance().showThumb(file.getAbsolutePath(), new Runnable() {
             @Override
             public void run() {
-                Message fileMessage = Message.obtain(getTargetId(), getConversationType(), VideoMessage.obtain(Uri.fromFile(file)));
+                Bitmap bitmap = VideoThumbLoader.getInstance().getVideoThumbToCache(file.getAbsolutePath());
+                if(bitmap == null){
+                    return;
+                }
+                ByteArrayOutputStream bos = null;
+                File thumnail = null;
+                try{
+                    bos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, VideoMessageHandler.THUMB_COMPRESSED_QUALITY, bos);
+                    byte[] data = bos.toByteArray();
+                    String path = SealAppContext.getInstance().getContext().getCacheDir().getAbsolutePath();
+                    String name = "temp_" + System.currentTimeMillis() + ".jpg";
+                    thumnail = FileUtils.byte2File(data, path, name);
+                    if(!bitmap.isRecycled()) {
+                        bitmap.recycle();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }finally {
+                    if(bos != null){
+                        try {
+                            bos.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                VideoMessage videoMessage = VideoMessage.obtain(Uri.fromFile(file));
+                if(thumnail != null){
+                    videoMessage.setThumUri(Uri.fromFile(thumnail));
+                }
+                Message fileMessage = Message.obtain(getTargetId(), getConversationType(), videoMessage);
                 RongIMClient.getInstance().sendMediaMessage(fileMessage, PUSH_CONTENT_VIDEO, "", new IRongCallback.ISendMediaMessageCallback() {
                     @Override
                     public void onProgress(Message message, int progress) {
@@ -97,11 +129,13 @@ public class ConversationFragmentEx extends ConversationFragment {
                         updateMessageStatus(message);
 
                         System.out.println("onProgress " + progress);
+                        RongContext.getInstance().getEventBus().post(message);
                     }
 
                     @Override
                     public void onCanceled(Message message) {
                         System.out.println("onCanceled " + message);
+                        RongContext.getInstance().getEventBus().post(message);
                     }
 
                     @Override
@@ -110,6 +144,7 @@ public class ConversationFragmentEx extends ConversationFragment {
                         getMessageAdapter().add(UIMessage.obtain(message));
                         System.out.println("onAttached " + message);
                         onEventMainThread(message);
+                        RongContext.getInstance().getEventBus().post(message);
                     }
 
                     @Override
@@ -117,6 +152,7 @@ public class ConversationFragmentEx extends ConversationFragment {
                         //发送成功
                         updateMessageStatus(message);
                         System.out.println("onSuccess " + message);
+                        RongContext.getInstance().getEventBus().post(message);
                     }
 
                     @Override
@@ -124,53 +160,13 @@ public class ConversationFragmentEx extends ConversationFragment {
                         //发送失败
                         updateMessageStatus(message);
                         System.out.println("onError " + message + "  " + errorCode );
+                        RongContext.getInstance().getEventBus().post(message);
                     }
                 });
             }
         }, 200, 200);
 
 
-    }
-
-    private void moveToBottom(){
-        if(getView() != null){
-            AutoRefreshListView listView = findViewById(getView(), R.id.rc_list);
-            if(listView != null){
-                listView.smoothScrollToPosition(getMessageAdapter().getCount() - 1);
-            }
-        }
-    }
-
-    public void sendImgMsg(Uri imageFileThumbUri, Uri imageFileSourceUri) {
-        ImageMessage imgMsg = ImageMessage.obtain(imageFileThumbUri, imageFileSourceUri);
-        RongIMClient.getInstance().sendImageMessage(getConversationType(), getTargetId(), imgMsg, PUSH_CONTENT_VIDEO, "",
-                new RongIMClient.SendImageMessageCallback() {
-                    @Override
-                    public void onAttached(Message message) {
-                        //保存数据库成功
-                        getMessageAdapter().add(UIMessage.obtain(message));
-                        onEventMainThread(message);
-                    }
-
-                    @Override
-                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
-                        //发送失败
-                        updateMessageStatus(message);
-                    }
-
-                    @Override
-                    public void onSuccess(Message message) {
-                        //发送成功
-                        updateMessageStatus(message);
-                    }
-
-                    @Override
-                    public void onProgress(Message message, int progress) {
-                        //发送进度
-                        message.setExtra(progress + "");
-                        updateMessageStatus(message);
-                    }
-                });
     }
     private void updateMessageStatus(Message message) {
         MessageListAdapter adapter = getMessageAdapter();
