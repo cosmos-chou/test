@@ -71,7 +71,8 @@
         android:layout_height="0.25dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:background="#dfdfdd" />
+        android:background="#dfdfdd"
+        android:visibility="gone"/>
 
 
     <RelativeLayout
@@ -87,7 +88,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
-            android:text="@string/rongcloud_web" />
+            android:text="@string/rongcloud_web"
+            android:visibility="gone"/>
 
 
     </RelativeLayout>
@@ -142,13 +144,15 @@
         android:layout_height="0.25dp"
         android:layout_marginLeft="14dp"
         android:layout_marginRight="14dp"
-        android:background="#dfdfdd" />
+        android:background="#dfdfdd"
+        android:visibility="gone"/>
 
 
     <RelativeLayout
         android:id="@+id/start_debug"
         android:layout_width="match_parent"
-        android:layout_height="47.5dp">
+        android:layout_height="47.5dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"

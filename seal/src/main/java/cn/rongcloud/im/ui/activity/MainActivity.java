@@ -31,7 +31,6 @@ import cn.rongcloud.im.server.utils.NToast;
 import cn.rongcloud.im.server.widget.LoadDialog;
 import cn.rongcloud.im.ui.adapter.ConversationListAdapterEx;
 import cn.rongcloud.im.ui.fragment.ContactsFragment;
-import cn.rongcloud.im.ui.fragment.DiscoverFragment;
 import cn.rongcloud.im.ui.fragment.MineFragment;
 import cn.rongcloud.im.ui.widget.DragPointView;
 import cn.rongcloud.im.ui.widget.MorePopWindow;
@@ -84,6 +83,7 @@ public class MainActivity extends FragmentActivity implements
         RelativeLayout chatRLayout = (RelativeLayout) findViewById(R.id.seal_chat);
         RelativeLayout contactRLayout = (RelativeLayout) findViewById(R.id.seal_contact_list);
         RelativeLayout foundRLayout = (RelativeLayout) findViewById(R.id.seal_find);
+        foundRLayout.setVisibility(View.GONE);
         RelativeLayout mineRLayout = (RelativeLayout) findViewById(R.id.seal_me);
         mImageChats = (ImageView) findViewById(R.id.tab_img_chats);
         mImageContact = (ImageView) findViewById(R.id.tab_img_contact);
@@ -122,7 +122,7 @@ public class MainActivity extends FragmentActivity implements
 
         mFragment.add(conversationList);
         mFragment.add(new ContactsFragment());
-        mFragment.add(new DiscoverFragment());
+//        mFragment.add(new DiscoverFragment());
         mFragment.add(new MineFragment());
         FragmentPagerAdapter fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -222,10 +222,10 @@ public class MainActivity extends FragmentActivity implements
                 mImageContact.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_contacts_hover));
                 break;
             case 2:
-                mTextFind.setTextColor(Color.parseColor("#0099ff"));
-                mImageFind.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_found_hover));
-                break;
-            case 3:
+//                mTextFind.setTextColor(Color.parseColor("#0099ff"));
+//                mImageFind.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_found_hover));
+//                break;
+//            case 3:
                 mTextMe.setTextColor(Color.parseColor("#0099ff"));
                 mImageMe.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_me_hover));
                 break;
@@ -266,11 +266,11 @@ public class MainActivity extends FragmentActivity implements
             case R.id.seal_contact_list:
                 mViewPager.setCurrentItem(1, false);
                 break;
-            case R.id.seal_find:
-                mViewPager.setCurrentItem(2, false);
-                break;
+//            case R.id.seal_find:
+//                mViewPager.setCurrentItem(2, false);
+//                break;
             case R.id.seal_me:
-                mViewPager.setCurrentItem(3, false);
+                mViewPager.setCurrentItem(2, false);
                 mMineRed.setVisibility(View.GONE);
                 break;
             case R.id.seal_more:

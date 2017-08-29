@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">喜讯</string>
+    <string name="app_name">囍讯</string>
     <string name="action_settings">Settings</string>
 
 
@@ -20,7 +20,7 @@
     <string name="set_news_reminded">新消息提醒</string>
     <string name="set_privacy">隐私</string>
     <string name="set_set">设置</string>
-    <string name="set_rongcloud">关于 SealTalk</string>
+    <string name="set_rongcloud">关于 囍讯</string>
     <string name="set_logout">注销</string>
     <string name="de_save">"保存"</string>
 
@@ -206,7 +206,7 @@
     <string name="contacts">通讯录</string>
     <string name="discover">发现</string>
     <string name="me">我</string>
-    <string name="mine_about">关于 SealTalk</string>
+    <string name="mine_about">关于 囍讯</string>
     <string name="my_wallet">我的钱包</string>
     <string name="mine_service">意见反馈</string>
     <string name="mine_setting">账号设置</string>
@@ -231,7 +231,7 @@
     <string name="prompt">提示</string>
     <string name="launched_a_location_sharing">我发起了位置共享</string>
     <string name="sdk_version_update">SDK版本</string>
-    <string name="sealtalk_version_update">SealTalk版本</string>
+    <string name="sealtalk_version_update">囍讯版本</string>
     <string name="all_group_member">全部群成员</string>
     <string name="group_announcement">群公告</string>
     <string name="group_code">群二维码</string>
@@ -299,7 +299,7 @@
 
     <string name="activity_detail_discussion_to_top">置顶</string>
     <string name="activity_detail_discussion_not_disturb">消息免打扰</string>
-    <string name="ac_about_seal_talk_version">SealTalk 版本</string>
+    <string name="ac_about_seal_talk_version">囍讯 版本</string>
     <string name="ac_about_sdk_version">SDK 版本</string>
     <string name="ac_about_shut_down_debug_mode">关闭debug模式</string>
     <string name="ac_detail_discussion_member_size">讨论组成员()</string>
