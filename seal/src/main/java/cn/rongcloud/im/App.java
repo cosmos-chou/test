@@ -150,7 +150,7 @@ public class App extends MultiDexApplication {
 //                    view.getContext().startActivity(intent);
 //                }
 //            }));
-//            RongExtensionManager.getInstance().registerExtensionModule(new RecognizeExtensionModule());
+//            RongExtensionManager.getInstance().registerExtensionModule(new '());
             ExtendManager.init(this);
         }
     }

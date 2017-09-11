@@ -12,7 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
-import com.cjt2325.cameralibrary.JCameraView;
+import extend.view.JCameraView;
 
 import java.io.File;
 import java.io.FileNotFoundException;

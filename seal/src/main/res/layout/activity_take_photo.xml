@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.cjt2325.cameralibrary.JCameraView
+    <extend.view.JCameraView
         android:id="@+id/cameraview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

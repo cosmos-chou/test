@@ -147,7 +147,7 @@ public class SealUserInfoManager implements OnDataListener {
             mUserInfoCache = new LinkedHashMap<>();
             setUserInfoEngineListener();
         }
-        mGetAllUserInfoState = sp.getInt("getAllUserInfoState", 0);
+        mGetAllUserInfoState = 0/*sp.getInt("getAllUserInfoState", 0)*/;
         RLog.d(TAG, "SealUserInfoManager mGetAllUserInfoState = " + mGetAllUserInfoState);
     }
 
@@ -974,6 +974,8 @@ public class SealUserInfoManager implements OnDataListener {
                 } else {
                     friendsList = getFriends();
                 }
+
+
                 if (callback != null) {
                     callback.onCallback(friendsList);
                 }
@@ -1687,7 +1689,9 @@ public class SealUserInfoManager implements OnDataListener {
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo ni = cm.getActiveNetworkInfo();
-        return ni != null && ni.isConnectedOrConnecting();
+        boolean result = ni != null && ni.isConnectedOrConnecting();
+        RLog.i(TAG, "isNetworkConnected result： " + result);
+        return result;
     }
 
     /**

@@ -24,6 +24,7 @@ public class ExPlugnMoudle extends DefaultExtensionModule {
         IPluginModule moudle;
         for(int i = 0, size = moudles.size(); i < size; i ++){
             moudle = moudles.get(i);
+            System.out.println(moudle);
             if(moudle instanceof ImagePlugin){
                 moudlesEx.add(new ImagePlugnEx());
                 moudlesEx.add(new TakePhotoPlugn());

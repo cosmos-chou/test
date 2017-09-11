@@ -1,10 +1,12 @@
 package cn.rongcloud.im.ui.activity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,11 +20,14 @@ import android.widget.ViewFlipper;
 import com.umeng.analytics.MobclickAgent;
 
 import cn.rongcloud.im.R;
+import cn.rongcloud.im.SealAppContext;
 import cn.rongcloud.im.server.SealAction;
 import cn.rongcloud.im.server.network.async.AsyncTaskManager;
 import cn.rongcloud.im.server.network.async.OnDataListener;
 import cn.rongcloud.im.server.network.http.HttpException;
 import cn.rongcloud.im.server.utils.NToast;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public abstract class BaseActivity extends FragmentActivity implements OnDataListener {
 
@@ -181,6 +186,13 @@ public abstract class BaseActivity extends FragmentActivity implements OnDataLis
     protected void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        if(RongIMClient.getInstance().getCurrentConnectionStatus().equals(RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED)){
+            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+            String cacheToken = sp.getString("loginToken", "");
+            if (!TextUtils.isEmpty(cacheToken)) {
+                RongIM.connect(cacheToken, SealAppContext.getInstance().getConnectCallback());
+            }
+        }
     }
 
     protected void onPause() {
