@@ -7,8 +7,11 @@ package extend.common.wangtiansoft;
 public class EncryDao {
 
     public static final String KEY = "1p622z194LH5POS9";
-
+    public static final boolean ENABLE = false;
     public static String encry(String content, String key) {
+        if(!ENABLE){
+            return content;
+        }
         try{
             String aesKey = key;
             String data = AES.encryptToBase64(content, aesKey);
@@ -21,6 +24,11 @@ public class EncryDao {
 
 
     public static String deEncry(String object, String key){
+
+        if(!ENABLE){
+            return object;
+        }
+
         try {
             // 获取aesKEY
             String enkey = /*RSA.decrypt(bean.encryptKey, key);*/key;
@@ -33,6 +41,9 @@ public class EncryDao {
     }
 
     public static String deEncryDirectly(String object, String key, boolean base64){
+        if(!ENABLE){
+            return object;
+        }
         try {
             // 获取aesKEY
             String result = base64 ? AES.decryptFromBase64(object, key) : AES.decryptDirectly(object, key);

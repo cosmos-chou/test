@@ -65,6 +65,7 @@ public class QRCodeCardActivity extends BaseActivity {
         ButterKnife.bind(this);
         //沉浸式状态栏
         StatusBarUtil.setColor(this, extend.plugn.utils.UIUtils.getColor(R.color.colorPrimaryDark), 10);
+        init();
         initView();
         initData();
     }

@@ -78,7 +78,7 @@
     <string name="github">GitHub</string>
     <string name="emotion">表情</string>
     <string name="setting">设置</string>
-    <string name="qr_code_card_tip">扫一扫上面的二维码图案，加我微信</string>
+    <string name="qr_code_card_tip">扫一扫上面的二维码图案，加我好友</string>
 
     <!--我的个人信息-->
     <string name="header_pic">头像</string>
