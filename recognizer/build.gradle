@@ -2,7 +2,10 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '25.0.0'
+    buildToolsVersion "25.0.0"
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         minSdkVersion 15
@@ -23,18 +26,10 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-
-    android {
-        lintOptions {
-            abortOnError false
-        }
-    }
-
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':IMKit')
-    compile 'com.android.support:support-v4:23.4.0'
+    compile project (':IMKit')
+    compile 'com.android.support:support-v4:21.0.3'
 }
-
