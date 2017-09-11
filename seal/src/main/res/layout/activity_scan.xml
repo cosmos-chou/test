@@ -39,169 +39,167 @@
         app:qrcv_toolbarHeight="112px"
         app:qrcv_topOffset="90dp"/>
 
-    <include layout="@layout/include_toolbar"/>
+    <!--<com.zhy.autolayout.AutoLinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:background="@color/black0"-->
+        <!--android:paddingBottom="20px"-->
+        <!--android:paddingTop="20px">-->
 
-    <com.zhy.autolayout.AutoLinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black0"
-        android:paddingBottom="20px"
-        android:paddingTop="20px">
+        <!--&lt;!&ndash;扫码&ndash;&gt;-->
+        <!--<com.zhy.autolayout.AutoLinearLayout-->
+            <!--android:id="@+id/llSaoma"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
-        <!--扫码-->
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/llSaoma"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            <!--<com.zhy.autolayout.AutoRelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center">-->
 
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivSaomaNormal"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/alh"/>-->
 
-                <ImageView
-                    android:id="@+id/ivSaomaNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/alh"/>
-
-                <ImageView
-                    android:id="@+id/ivSaomaPress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ali"
-                    android:visibility="gone"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivSaomaPress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/ali"-->
+                    <!--android:visibility="gone"/>-->
 
 
-            </com.zhy.autolayout.AutoRelativeLayout>
+            <!--</com.zhy.autolayout.AutoRelativeLayout>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10px"
-                android:text="@string/scan_code"
-                android:textColor="@color/gray4"
-                android:textSize="12sp"/>
-        </com.zhy.autolayout.AutoLinearLayout>
-        <!--封面-->
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/llFengmian"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="10px"-->
+                <!--android:text="@string/scan_code"-->
+                <!--android:textColor="@color/gray4"-->
+                <!--android:textSize="12sp"/>-->
+        <!--</com.zhy.autolayout.AutoLinearLayout>-->
+        <!--&lt;!&ndash;封面&ndash;&gt;-->
+        <!--<com.zhy.autolayout.AutoLinearLayout-->
+            <!--android:id="@+id/llFengmian"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+            <!--<com.zhy.autolayout.AutoRelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center">-->
 
-                <ImageView
-                    android:id="@+id/ivFengmianNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ale"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivFengmianNormal"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/ale"/>-->
 
-                <ImageView
-                    android:id="@+id/ivFengmianPress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/alf"
-                    android:visibility="gone"/>
-
-
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10px"
-                android:text="@string/cover"
-                android:textColor="@color/gray4"
-                android:textSize="12sp"/>
-        </com.zhy.autolayout.AutoLinearLayout>
-        <!--街景-->
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/llJiejing"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivFengmianPress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/alf"-->
+                    <!--android:visibility="gone"/>-->
 
 
-                <ImageView
-                    android:id="@+id/ivJiejingNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/alk"/>
+            <!--</com.zhy.autolayout.AutoRelativeLayout>-->
 
-                <ImageView
-                    android:id="@+id/ivJiejingPress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/all"
-                    android:visibility="gone"/>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="10px"-->
+                <!--android:text="@string/cover"-->
+                <!--android:textColor="@color/gray4"-->
+                <!--android:textSize="12sp"/>-->
+        <!--</com.zhy.autolayout.AutoLinearLayout>-->
+        <!--&lt;!&ndash;街景&ndash;&gt;-->
+        <!--<com.zhy.autolayout.AutoLinearLayout-->
+            <!--android:id="@+id/llJiejing"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
-            </com.zhy.autolayout.AutoRelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:text="@string/street_scape"
-                android:textColor="@color/gray4"
-                android:textSize="12sp"/>
-        </com.zhy.autolayout.AutoLinearLayout>
-        <!--翻译-->
-        <com.zhy.autolayout.AutoLinearLayout
-            android:id="@+id/llFanyi"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <com.zhy.autolayout.AutoRelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+            <!--<com.zhy.autolayout.AutoRelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center">-->
 
 
-                <ImageView
-                    android:id="@+id/ivFanyiNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/alm"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivJiejingNormal"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/alk"/>-->
 
-                <ImageView
-                    android:id="@+id/ivFanyiPress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/aln"
-                    android:visibility="gone"/>
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivJiejingPress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/all"-->
+                    <!--android:visibility="gone"/>-->
 
-            </com.zhy.autolayout.AutoRelativeLayout>
+            <!--</com.zhy.autolayout.AutoRelativeLayout>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10px"
-                android:text="@string/translate"
-                android:textColor="@color/gray4"
-                android:textSize="12sp"/>
-        </com.zhy.autolayout.AutoLinearLayout>
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:text="@string/street_scape"-->
+                <!--android:textColor="@color/gray4"-->
+                <!--android:textSize="12sp"/>-->
+        <!--</com.zhy.autolayout.AutoLinearLayout>-->
+        <!--&lt;!&ndash;翻译&ndash;&gt;-->
+        <!--<com.zhy.autolayout.AutoLinearLayout-->
+            <!--android:id="@+id/llFanyi"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
 
-    </com.zhy.autolayout.AutoLinearLayout>
+            <!--<com.zhy.autolayout.AutoRelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center">-->
+
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivFanyiNormal"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/alm"/>-->
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivFanyiPress"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@mipmap/aln"-->
+                    <!--android:visibility="gone"/>-->
+
+            <!--</com.zhy.autolayout.AutoRelativeLayout>-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="10px"-->
+                <!--android:text="@string/translate"-->
+                <!--android:textColor="@color/gray4"-->
+                <!--android:textSize="12sp"/>-->
+        <!--</com.zhy.autolayout.AutoLinearLayout>-->
+
+    <!--</com.zhy.autolayout.AutoLinearLayout>-->
 
 </com.zhy.autolayout.AutoRelativeLayout>

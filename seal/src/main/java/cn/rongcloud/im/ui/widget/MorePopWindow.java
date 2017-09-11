@@ -12,10 +12,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.ui.activity.SearchFriendActivity;
 import cn.rongcloud.im.ui.activity.SelectFriendsActivity;
+import extend.common.ScanActivity;
+import extend.plugn.utils.UIUtils;
 
 
 public class MorePopWindow extends PopupWindow {
@@ -49,6 +52,12 @@ public class MorePopWindow extends PopupWindow {
         RelativeLayout re_addfriends = (RelativeLayout) content.findViewById(R.id.re_addfriends);
         RelativeLayout re_chatroom = (RelativeLayout) content.findViewById(R.id.re_chatroom);
         RelativeLayout re_scanner = (RelativeLayout) content.findViewById(R.id.re_scanner);
+        RelativeLayout re_qrcode = (RelativeLayout) content.findViewById(R.id.re_qrcode);
+
+        TextView qrText = (TextView)(re_qrcode.findViewById(R.id.re_qrcode_text));
+        int size = UIUtils.dip2Px(30);
+        qrText.getCompoundDrawables()[0].setBounds(0, 0 ,size, size);
+
         re_addfriends.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -79,7 +88,13 @@ public class MorePopWindow extends PopupWindow {
             }
         });
 
-
+        re_qrcode.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity(new Intent(context, ScanActivity.class));
+                MorePopWindow.this.dismiss();
+            }
+        });
     }
 
     /**

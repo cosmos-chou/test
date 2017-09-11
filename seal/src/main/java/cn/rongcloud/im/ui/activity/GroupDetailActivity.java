@@ -62,6 +62,7 @@ import cn.rongcloud.im.server.widget.LoadDialog;
 import cn.rongcloud.im.server.widget.SelectableRoundedImageView;
 import cn.rongcloud.im.ui.widget.DemoGridView;
 import cn.rongcloud.im.ui.widget.switchbutton.SwitchButton;
+import extend.user.QRCodeCardActivity;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.emoticon.AndroidEmoji;
@@ -449,6 +450,16 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_group_qr_code:
+                if(mGroup != null){
+                    Intent intent = new Intent(this, QRCodeCardActivity.class);
+                    intent.putExtra("groupName", mGroup.getName());
+                    intent.putExtra("groupId", mGroup.getName());
+                    intent.putExtra("groupUrl",  SealUserInfoManager.getInstance().getPortraitUri(mGroup));
+                    startActivity(intent);
+                }
+
+                break;
             case R.id.group_quit:
                 DialogWithYesOrNoUtils.getInstance().showDialog(mContext, getString(R.string.confirm_quit_group), new DialogWithYesOrNoUtils.DialogCallBack() {
                     @Override
@@ -955,6 +966,7 @@ public class GroupDetailActivity extends BaseActivity implements View.OnClickLis
         groupClean.setOnClickListener(this);
         mGroupNotice.setOnClickListener(this);
         mSearchMessagesLinearLayout.setOnClickListener(this);
+        findViewById(R.id.ll_group_qr_code).setOnClickListener(this);
     }
 
     @Override

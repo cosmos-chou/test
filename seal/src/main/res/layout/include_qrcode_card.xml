@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -21,17 +20,15 @@
                 android:id="@+id/ivHeader"
                 android:layout_width="130px"
                 android:layout_height="130px"
-                android:scaleType="centerCrop"
-                android:src="@drawable/default_header"/>
+                android:scaleType="centerCrop"/>
 
             <!--九宫格头像-->
-            <com.lqr.ninegridimageview.LQRNineGridImageView
+            <ImageView
                 android:id="@+id/ngiv"
                 android:layout_width="130px"
                 android:layout_height="130px"
                 android:background="@color/gray9"
-                android:visibility="gone"
-                app:imgGap="8px"/>
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/tvName"
@@ -50,7 +47,7 @@
                 android:layout_height="30px"
                 android:layout_marginTop="22px"
                 android:scaleType="fitXY"
-                android:src="@drawable/_102/ic_gender_female"
+                android:src="@drawable/ic_gender_female"
                 android:visibility="gone"/>
 
         </com.zhy.autolayout.AutoLinearLayout>

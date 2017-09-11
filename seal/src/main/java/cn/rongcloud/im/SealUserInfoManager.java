@@ -1368,6 +1368,13 @@ public class SealUserInfoManager implements OnDataListener {
             return getFriendByID(userID) != null;
     }
 
+    public boolean isInGoup(String groupId){
+        if (TextUtils.isEmpty(groupId))
+            return false;
+        else
+            return getGroupsByID(groupId) != null;
+    }
+
     /**
      * 同步接口,获取1个好友信息
      *

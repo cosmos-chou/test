@@ -42,6 +42,7 @@ import cn.rongcloud.im.server.utils.photo.PhotoUtils;
 import cn.rongcloud.im.server.widget.BottomMenuDialog;
 import cn.rongcloud.im.server.widget.LoadDialog;
 import cn.rongcloud.im.server.widget.SelectableRoundedImageView;
+import extend.user.QRCodeCardActivity;
 import io.rong.imageloader.core.ImageLoader;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
@@ -79,6 +80,7 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
         mImageView = (SelectableRoundedImageView) findViewById(R.id.img_my_portrait);
         mName = (TextView) findViewById(R.id.tv_my_username);
         portraitItem.setOnClickListener(this);
+        findViewById(R.id.ll_my_qr_code).setOnClickListener(this);
         nameItem.setOnClickListener(this);
         String cacheName = sp.getString(SealConst.SEALTALK_LOGIN_NAME, "");
         String cachePortrait = sp.getString(SealConst.SEALTALK_LOGING_PORTRAIT, "");
@@ -129,6 +131,9 @@ public class MyAccountActivity extends BaseActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_my_qr_code:
+                 startActivity(new Intent(this, QRCodeCardActivity.class));
+                break;
             case R.id.rl_my_portrait:
                 showPhotoDialog();
                 break;

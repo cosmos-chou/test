@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="15"
-        android:targetSdkVersion="21" />
+        android:targetSdkVersion="23" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -336,6 +336,13 @@
             android:screenOrientation="portrait"/>
         <activity android:name="extend.common.VideoPlayerActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name="extend.common.ScanActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="extend.user.QRCodeCardActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
         <receiver
             android:name=".SealNotificationReceiver"
             android:exported="true">
