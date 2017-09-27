@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -45,7 +44,7 @@ import io.rong.message.ContactNotificationMessage;
 //import io.rong.toolkit.TestActivity;
 
 @SuppressWarnings("deprecation")
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends ImmersiveActivity implements
         ViewPager.OnPageChangeListener,
         View.OnClickListener,
         DragPointView.OnDragListencer,

@@ -3,9 +3,9 @@ package extend.plugn;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.rongcloud.im.message.module.SealExtensionModule;
 import extend.plugn.takephoto.ImagePlugnEx;
 import extend.plugn.takephoto.TakePhotoPlugn;
-import io.rong.imkit.DefaultExtensionModule;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imkit.plugin.ImagePlugin;
 import io.rong.imkit.widget.provider.FilePlugin;
@@ -15,7 +15,7 @@ import io.rong.imlib.model.Conversation;
  * Created by cosmos on 17-8-21.
  */
 
-public class ExPlugnMoudle extends DefaultExtensionModule {
+public class ExPlugnMoudle extends SealExtensionModule {
     @Override
     public List<IPluginModule> getPluginModules(Conversation.ConversationType conversationType) {
         List<IPluginModule> moudles = super.getPluginModules(conversationType);

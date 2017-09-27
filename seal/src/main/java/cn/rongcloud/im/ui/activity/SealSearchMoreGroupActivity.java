@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -42,7 +41,7 @@ import io.rong.imkit.RongIM;
 /**
  * Created by tiankui on 16/9/20.
  */
-public class SealSearchMoreGroupActivity extends Activity {
+public class SealSearchMoreGroupActivity extends ImmersiveActivity {
 
     private EditText mSearchEditText;
     private ListView mGroupsListView;

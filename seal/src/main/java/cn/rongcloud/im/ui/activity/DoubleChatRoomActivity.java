@@ -2,7 +2,6 @@ package cn.rongcloud.im.ui.activity;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,7 +17,7 @@ import io.rong.imlib.model.Conversation;
  * Created by AMing on 16/5/27.
  * Company RongCloud
  */
-public class DoubleChatRoomActivity extends FragmentActivity {
+public class DoubleChatRoomActivity extends ImmersiveActivity {
     private String chatroomId1;
     private String chatroomId2;
 

@@ -29,6 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.jaeger.library.StatusBarUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +67,7 @@ import io.rong.imlib.model.UserInfo;
 /**
  * Created by tiankui on 16/8/31.
  */
-public class SealSearchActivity extends Activity {
+public class SealSearchActivity extends ImmersiveActivity {
     private static final int SEARCH_TYPE_FLAG = 1;
 
     private EditText mSearchEditText;
@@ -98,8 +100,8 @@ public class SealSearchActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarUtil.setColor(this, extend.plugn.utils.UIUtils.getColor(R.color.de_title_bg), 0);
         setContentView(R.layout.activity_seal_search);
-
         initView();
         initData();
     }

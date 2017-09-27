@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -29,7 +28,7 @@ import cn.rongcloud.im.server.utils.NToast;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
-public abstract class BaseActivity extends FragmentActivity implements OnDataListener {
+public abstract class BaseActivity extends ImmersiveActivity implements OnDataListener {
 
     protected Context mContext;
     public AsyncTaskManager mAsyncTaskManager;

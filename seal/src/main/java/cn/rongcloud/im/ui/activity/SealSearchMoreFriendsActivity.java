@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -36,7 +35,6 @@ import cn.rongcloud.im.db.Friend;
 import cn.rongcloud.im.db.FriendDao;
 import cn.rongcloud.im.model.SearchResult;
 import cn.rongcloud.im.server.pinyin.CharacterParser;
-import cn.rongcloud.im.server.utils.RongGenerate;
 import cn.rongcloud.im.server.widget.SelectableRoundedImageView;
 import de.greenrobot.dao.query.QueryBuilder;
 import io.rong.imageloader.core.ImageLoader;
@@ -45,7 +43,7 @@ import io.rong.imkit.RongIM;
 /**
  * Created by tiankui on 16/9/2.
  */
-public class SealSearchMoreFriendsActivity extends Activity implements AdapterView.OnItemClickListener {
+public class SealSearchMoreFriendsActivity extends ImmersiveActivity implements AdapterView.OnItemClickListener {
 
     private EditText mSearchEditText;
     private ListView mFriendListView;

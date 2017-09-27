@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
@@ -64,7 +62,6 @@ public class QRCodeCardActivity extends BaseActivity {
         setContentView(provideContentViewId());
         ButterKnife.bind(this);
         //沉浸式状态栏
-        StatusBarUtil.setColor(this, extend.plugn.utils.UIUtils.getColor(R.color.colorPrimaryDark), 10);
         init();
         initView();
         initData();

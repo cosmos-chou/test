@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -46,7 +45,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by tiankui on 16/10/8.
  */
 
-public class SealSearchChattingDetailActivity extends Activity {
+public class SealSearchChattingDetailActivity extends ImmersiveActivity {
     private static final int SEARCH_TYPE_FLAG = 1;
 
     private TextView mTitleTextView;

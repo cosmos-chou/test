@@ -14,8 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.jaeger.library.StatusBarUtil;
-
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
@@ -59,9 +57,6 @@ public class ScanActivity extends BaseActivity implements QRCodeView.Delegate {
 
         setContentView(provideContentViewId());
         ButterKnife.bind(this);
-
-        //沉浸式状态栏
-        StatusBarUtil.setColor(this, extend.plugn.utils.UIUtils.getColor(R.color.colorPrimaryDark), 10);
 
         initView();
         initListener();

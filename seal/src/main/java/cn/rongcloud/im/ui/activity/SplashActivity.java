@@ -1,6 +1,5 @@
 package cn.rongcloud.im.ui.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,7 +17,7 @@ import io.rong.imkit.RongIM;
  * Created by AMing on 16/8/5.
  * Company RongCloud
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends ImmersiveActivity {
 
     private Context context;
     private android.os.Handler handler = new android.os.Handler();
@@ -32,6 +31,7 @@ public class SplashActivity extends Activity {
         context = this;
         SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
         String cacheToken = sp.getString("loginToken", "");
+
         if (!TextUtils.isEmpty(cacheToken)) {
             RongIM.connect(cacheToken, SealAppContext.getInstance().getConnectCallback());
             handler.postDelayed(new Runnable() {

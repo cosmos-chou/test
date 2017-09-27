@@ -2,6 +2,7 @@ package extend.manager;
 
 import android.content.Context;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import extend.plugn.ExPlugnMoudle;
@@ -17,7 +18,7 @@ import io.rong.imkit.RongIM;
  */
 
 public class ExtendManager {
-
+    private static final String DEFAULT_REDPACKET = "com.jrmf360.rylib.modules.JrmfExtensionModule";
     public static void init(Context context) {
         setMyExtensionModule();
         registerExtMessageTypeAndProvider(context);
@@ -32,17 +33,15 @@ public class ExtendManager {
 
     public static void setMyExtensionModule() {
         List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
-        IExtensionModule defaultModule = null;
         if (moduleList != null) {
-            for (IExtensionModule module : moduleList) {
+            for (IExtensionModule module : new ArrayList<IExtensionModule>(moduleList)) {
                 if (module instanceof DefaultExtensionModule) {
-                    defaultModule = module;
-                    break;
+                    RongExtensionManager.getInstance().unregisterExtensionModule(module);
+                    RongExtensionManager.getInstance().registerExtensionModule(new ExPlugnMoudle());
+                }else if( module != null && DEFAULT_REDPACKET.equalsIgnoreCase(module.getClass().getName())){
+                    RongExtensionManager.getInstance().unregisterExtensionModule(module);
                 }
-            }
-            if (defaultModule != null) {
-                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
-                RongExtensionManager.getInstance().registerExtensionModule(new ExPlugnMoudle());
+                System.out.println(module);
             }
         }
     }

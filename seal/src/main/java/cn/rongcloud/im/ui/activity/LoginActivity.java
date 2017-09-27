@@ -218,6 +218,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LoginResponse loginResponse = (LoginResponse) result;
                     if (loginResponse.getCode() == 200) {
                         loginToken = loginResponse.getResult().getToken();
+                        loginToken = "hG9WpZjgz5ofSBpZuq4lt1SV6Qah6yDWTfU4ggn7XK3zIXZzUE4++Fzb/9pUDQyepddAlByumNem/MqeEt0Eww==";
                         if (!TextUtils.isEmpty(loginToken)) {
                             RongIM.connect(loginToken, new RongIMClient.ConnectCallback() {
                                 @Override
