@@ -274,6 +274,9 @@ public class ContactsFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateFriendsList(List<Friend> friendsList) {
+        if(friendsList == null){
+            friendsList = new ArrayList<>();
+        }
         //updateUI fragment初始化和好友信息更新时都会调用,isReloadList表示是否是好友更新时调用
         boolean isReloadList = false;
         if (mFriendList != null && mFriendList.size() > 0) {

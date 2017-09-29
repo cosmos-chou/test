@@ -30,7 +30,7 @@ import com.cjt2325.cameralibrary.FoucsView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 
 import cn.rongcloud.im.R;
@@ -83,6 +83,8 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
 
     private CameraViewListener cameraViewListener;
 
+    private int mOrition = 90;
+
     public void setCameraViewListener(CameraViewListener cameraViewListener) {
         this.cameraViewListener = cameraViewListener;
     }
@@ -103,7 +105,6 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
         findAvailableCameras();
         SELECTED_CAMERA = CAMERA_POST_POSITION;
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.JCameraView, defStyleAttr, 0);
-
         iconWidth = a.getDimensionPixelSize(R.styleable.JCameraView_iconWidth, (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP, 35, getResources().getDisplayMetrics()));
         iconMargin = a.getDimensionPixelSize(R.styleable.JCameraView_iconMargin, (int) TypedValue.applyDimension(
@@ -237,8 +238,10 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
                     releaseCamera();
                     if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
                         SELECTED_CAMERA = CAMERA_FRONT_POSITION;
+                        mOrition = /*270*/ 90;
                     } else {
                         SELECTED_CAMERA = CAMERA_POST_POSITION;
+                        mOrition = 90;
                     }
                     mCamera = getCamera(SELECTED_CAMERA);
                     previewWidth = previewHeight = 0;
@@ -299,8 +302,8 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
         try {
             mParam = camera.getParameters();
 //
-            Camera.Size previewSize = CameraParamUtil.getInstance().getPreviewSize(mParam.getSupportedPreviewSizes(), 1000, screenProp);
-            Camera.Size pictureSize = CameraParamUtil.getInstance().getPictureSize(mParam.getSupportedPictureSizes(), 1200, screenProp);
+            Camera.Size previewSize = CameraParamUtil.getInstance().getPreviewSize(wrapSize(mParam.getSupportedPreviewSizes()), 1000, screenProp);
+            Camera.Size pictureSize = CameraParamUtil.getInstance().getPictureSize(wrapSize(mParam.getSupportedPictureSizes()), 1200, screenProp);
 
             mParam.setPreviewSize(previewSize.width, previewSize.height);
             mParam.setPictureSize(pictureSize.width, pictureSize.height);
@@ -315,7 +318,7 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
             camera.setParameters(mParam);
             mParam = camera.getParameters();
             camera.setPreviewDisplay(holder);
-            camera.setDisplayOrientation(90);
+            camera.setDisplayOrientation(mOrition);
             camera.startPreview();
         } catch (IOException e) {
             e.printStackTrace();
@@ -446,6 +449,18 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
     }
 
 
+    private List<Camera.Size> wrapSize(List<Camera.Size> origin){
+        if(origin != null && origin.size() > 0){
+            return origin;
+        }else{
+            List<Camera.Size> wrapped = new ArrayList<>();
+            if (mCamera != null){
+                wrapped.add(mCamera.new Size(720, 1280));
+            }
+            return wrapped;
+        }
+    }
+
     private void startRecord() {
         if (isRecorder) {
             mediaRecorder.stop();
@@ -472,7 +487,8 @@ public class JCameraView extends RelativeLayout implements SurfaceHolder.Callbac
         if (mParam == null) {
             mParam = mCamera.getParameters();
         }
-        Camera.Size videoSize = CameraParamUtil.getInstance().getPictureSize(mParam.getSupportedVideoSizes(), 450, screenProp);
+
+        Camera.Size videoSize = CameraParamUtil.getInstance().getPictureSize(wrapSize(mParam.getSupportedVideoSizes()), 450, screenProp);
         RLog.d(TAG, "get video size: " + videoSize.width + "  " + videoSize.height);
         mediaRecorder.setVideoSize(videoSize.width, videoSize.height);
         if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {

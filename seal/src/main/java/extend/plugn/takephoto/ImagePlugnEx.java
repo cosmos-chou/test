@@ -21,7 +21,6 @@ public class ImagePlugnEx extends ImagePlugin {
             ReflectUtils.setValue(ImagePlugin.class, "targetId", extension.getTargetId(), this);
             Intent intent = new Intent(currentFragment.getActivity(), PictureSelectorActivityEx.class);
             extension.startActivityForPluginResult(intent, 23, this);
-
         }
     }
 }

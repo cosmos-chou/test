@@ -102,7 +102,5 @@
     <orderEntry type="library" exported="" name="support-v4-23.4.0" level="project" />
     <orderEntry type="module" module-name="IMLib" exported="" />
     <orderEntry type="module" module-name="IMKit" exported="" />
-    <orderEntry type="library" exported="" name="Rong_IMLib" level="project" />
-    <orderEntry type="library" exported="" name="Rong_IMKit" level="project" />
   </component>
 </module>

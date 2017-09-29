@@ -3,7 +3,12 @@ package cn.rongcloud.im.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -39,6 +44,16 @@ public class ConversationFragmentEx extends ConversationFragment {
     @Override
     public boolean onResendItemClick(io.rong.imlib.model.Message message) {
         return false;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        if(view != null){
+            view.setBackgroundColor(Color.WHITE);
+        }
+
+        return view;
     }
 
     @Override

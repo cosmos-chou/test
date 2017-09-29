@@ -105,7 +105,7 @@ public class VideoThumbLoader {
         @Override
         protected Bitmap doInBackground(String... params) {
             Bitmap bitmap = createVideoThumbnail(params[0], width, height,
-                    MediaStore.Video.Thumbnails.MICRO_KIND);
+                    MediaStore.Video.Thumbnails.MINI_KIND);
             // 加入缓存中
             if (getVideoThumbToCache(params[0]) == null && bitmap != null) {
                 addVideoThumbToCache(path, bitmap);

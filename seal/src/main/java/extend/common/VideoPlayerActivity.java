@@ -1,16 +1,20 @@
 package extend.common;
 
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
-import android.widget.MediaController;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.io.IOException;
 
 import cn.rongcloud.im.R;
 import cn.rongcloud.im.SealAppContext;
@@ -46,17 +50,19 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
     public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 
     public static final String TAG = "VideoPlayerActivity";
-    private VideoView mVideoView;
+    private SurfaceView mVideoView;
     private ProgressBar mProgressBar;
-    private int mPositionWhenPaused = -1;
+    private int mPositionWhenPaused = 0;
 
-    private MediaController mMediaController;
+    private MediaPlayer mMediaPlayer;
 
     private VideoMessage mVideoMessage;
 
     private Message mMessage;
 
     private FileDownloadInfo mFileDownloadInfo = new FileDownloadInfo();
+
+    private boolean mSurfaceCreated = false;
 
     private  int mProgress;
     @Override
@@ -67,13 +73,19 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         mHeadLayout.setVisibility(View.GONE);
         RongContext.getInstance().getEventBus().register(this);
         setContentView(R.layout.extend_activity_video_player);
-        mVideoView = (VideoView) findViewById(R.id.video_view);
+        mVideoView = (SurfaceView) findViewById(R.id.video_view);
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-
+        mVideoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mVideoMessage = getIntent().getParcelableExtra(EXTRA_VIDEO_MESSAGE);
         mMessage = getIntent().getParcelableExtra(EXTRA_MESSAGE);
@@ -82,34 +94,41 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
             getFileDownloadInfo();
             beginOperation();
         }
-        //Create media controller
-        mMediaController = new MediaController(this);
-        mMediaController.setVisibility(View.GONE);
-        mVideoView.setMediaController(mMediaController);
+        mVideoView.getHolder().setKeepScreenOn(true);
+        mVideoView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                mSurfaceCreated = true;
+                if(mIsReady){
+                    beginPlay(mPositionWhenPaused);
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                mSurfaceCreated = false;
+                stopPaly();
+            }
+        });
     }
 
     public void onStart() {
         // Play Video
-        if(mIsReady){
-            beginPlay();
+        if(mIsReady && mSurfaceCreated){
+            beginPlay(mPositionWhenPaused);
         }
         super.onStart();
     }
 
-    public void onPause() {
+    public void onStop() {
         // Stop video when the activity is pause.
         stopPaly();
-        super.onPause();
-    }
-
-    public void onResume() {
-        // Resume video player
-        if (mPositionWhenPaused >= 0) {
-            mVideoView.seekTo(mPositionWhenPaused);
-            mPositionWhenPaused = -1;
-        }
-
-        super.onResume();
+        super.onStop();
     }
 
     public boolean onError(MediaPlayer player, int arg1, int arg2) {
@@ -204,7 +223,9 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
             case DOWNLOAD_SUCCESS:
                 mIsReady = true;
                 mProgressBar.setVisibility(VideoView.GONE);
-                beginPlay();;
+                if(mSurfaceCreated){
+                    beginPlay(mPositionWhenPaused);
+                }
                 break;
             case DOWNLOADING:
                 mProgressBar.setProgress(mProgress);
@@ -215,20 +236,52 @@ public class VideoPlayerActivity extends BaseActivity implements MediaPlayer.OnE
 
 
     boolean mIsReady = false;
-    public void beginPlay(){
+    public void beginPlay(final int mesc){
+        if(mMediaPlayer != null && mMediaPlayer.isPlaying()){
+            return;
+        }
+
         if(mIsReady){
-            mVideoView.setVideoURI(mVideoMessage.getLocalPath());
-            mVideoView.start();
+            mMediaPlayer = new MediaPlayer();
+            mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            try {
+                mMediaPlayer.setDataSource(this, mVideoMessage.getLocalPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mMediaPlayer.prepareAsync();
+
+            mMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mp) {
+                    try{
+                        mMediaPlayer.setDisplay(mVideoView.getHolder());
+                        mMediaPlayer.start();
+                        mMediaPlayer.seekTo(mesc);
+                    }catch (Exception ee){
+                        ee.printStackTrace();
+                        if(mMediaPlayer != null){
+                            mMediaPlayer.reset();
+                            mMediaPlayer.release();
+                            mMediaPlayer = null;
+                        }
+                    }
+                }
+            });
+            mMediaPlayer.setOnCompletionListener(this);
+            mMediaPlayer.setOnErrorListener(this);
         }
     }
 
     public void stopPaly(){
-        if(mIsReady){
-            mPositionWhenPaused = mVideoView.getCurrentPosition();
-            mVideoView.stopPlayback();
+        if (mIsReady && mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mPositionWhenPaused = mMediaPlayer.getCurrentPosition();
+            mMediaPlayer.stop();
+            mMediaPlayer.reset();
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
-
 
     class FileDownloadInfo {
         int state;
