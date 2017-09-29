@@ -65,6 +65,11 @@ public class ConversationFragmentEx extends ConversationFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
     public void onWarningDialog(String msg) {
         String typeStr = getUri().getLastPathSegment();
         if (!typeStr.equals("chatroom")) {

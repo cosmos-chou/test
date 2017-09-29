@@ -107,7 +107,8 @@ public class SplashActivity extends ImmersiveActivity {
 
 
     private void goToMain() {
-        startActivity(new Intent(context, MainActivity.class));
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
         finish();
     }
 

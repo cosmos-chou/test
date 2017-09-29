@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,10 +36,12 @@ import cn.rongcloud.im.ui.fragment.MineFragment;
 import cn.rongcloud.im.ui.widget.DragPointView;
 import cn.rongcloud.im.ui.widget.MorePopWindow;
 import io.rong.common.RLog;
+import io.rong.common.WakefulRongReceiver;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationListFragment;
 import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.ReConnectService;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.message.ContactNotificationMessage;
@@ -74,9 +78,22 @@ public class MainActivity extends ImmersiveActivity implements
         changeTextViewColor();
         changeSelectedTabState(0);
         initMainViewPager();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         registerHomeKeyReceiver(this);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mHomeKeyReceiver != null){
+            this.unregisterReceiver(mHomeKeyReceiver);
+            mHomeKeyReceiver = null;
+        }
+    }
 
     private void initViews() {
         RelativeLayout chatRLayout = (RelativeLayout) findViewById(R.id.seal_chat);
@@ -417,9 +434,26 @@ public class MainActivity extends ImmersiveActivity implements
     @Override
     protected void onDestroy() {
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(this);
-        if (mHomeKeyReceiver != null)
-            this.unregisterReceiver(mHomeKeyReceiver);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        try {
+            networkInfo = cm.getActiveNetworkInfo();
+        } catch (Exception var7) {
+            var7.printStackTrace();
+        }
+
+        boolean networkAvailable = networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
+        RLog.d("MainActivity", "connetct with : " + networkAvailable + "   " + networkInfo);
+
+        if(networkAvailable) {
+            WakefulRongReceiver.startWakefulService(this, new Intent(this, ReConnectService.class));
+        }
     }
 
     @Override

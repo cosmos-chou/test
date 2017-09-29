@@ -20,9 +20,11 @@ public class HomeWatcherReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        Log.i(LOG_TAG, "onReceive: action: " + action);
         if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
             String reason = intent.getStringExtra(SYSTEM_DIALOG_REASON_KEY);
+
+            Log.i(LOG_TAG, "onReceive: action: " + action + ", reason: " + reason);
+
             if (SYSTEM_DIALOG_REASON_HOME_KEY.equals(reason)) {
                 if (context instanceof MainActivity) {
                     MainActivity activity = (MainActivity) context;
